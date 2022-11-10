@@ -1,4 +1,5 @@
 # simple_autodiff
 The goal of this project is to recreate a simple automatic differentiation algorithm.<br>
- **Work in progress**
- 
+
+## Work in progress
+For the moment my algorithm handle only simple function that are compositions of sums, products and powers of variables.
