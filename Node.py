@@ -17,7 +17,7 @@ class Node:
         self.grad = 0.0
     
     def backprop(self, grad_from_above):
-        self.grad+=grad_from_above
+        self.grad = grad_from_above
         
         for parents,grad in self.parents_grad:
             parents.backprop(grad*grad_from_above)
@@ -31,11 +31,33 @@ class Node:
     
     def __add__(self,other_node):
         return Node(self.val+other_node.val,parents=[(self,1.0), (other_node,1.0)])
+    
+    def __sub__(self,other_node):
+        return Node(self.val-other_node.val,parents=[(self,1.0),(other_node,-1)])
         
     def __mul__(self, other_node):
         return Node(self.val*other_node.val,parents=[(self,other_node.val), (other_node,self.val)])
     
-    def __pow__(self, other_node):
+    def __pow__(self,power):
         a = self.val        
-        b = other_node.val
-        return Node(a**b,parents=[(self,b*(a**(b-1))),(other_node,np.log(a)*(a**b))])
+        return Node(a**power,parents=[(self,power*(a**(power-1)))])
+    
+    def __neg__(self):
+        return Node(-self.val,parents=[(self,-1)])
+    
+    def __truediv__(self,other_node):
+        a=self.val
+        b=other_node.val
+        return Node(a/b,parents=[(self,1/b),(other_node,-a/(b**2))])
+
+def exp(node):
+    return Node(np.exp(node.val),parents=[(node,np.exp(node.val))])
+
+def cos(node):
+    return Node(np.cos(node.val),parents=[(node,-np.sin(node.val))])
+
+def sin(node):
+    return Node(np.sin(node.val),parents=[(node,np.cos(node.val))])
+
+def log(node):
+    return Node(np.log(node.val),parents=[(node,1/node.val)])
