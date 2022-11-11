@@ -30,6 +30,8 @@ class Node:
         return "Node( val =% f,grad =% f )"%(self.val,self.grad)
     
     def __add__(self,other_node):
+        print(self)
+        self,other_node = self.__check_type(other_node)
         return Node(self.val+other_node.val,parents=[(self,1.0), (other_node,1.0)])
     
     def __sub__(self,other_node):
@@ -49,6 +51,16 @@ class Node:
         a=self.val
         b=other_node.val
         return Node(a/b,parents=[(self,1/b),(other_node,-a/(b**2))])
+    
+    def __check_type(self,other_node):
+        if type(self)!=Node and type(other_node)!=Node:
+            self=Node(self)
+            other_node=Node(other_node)
+        elif type(other_node)!=Node:
+            other_node=Node(other_node)
+        elif type(self)!=Node:
+            self=Node(self)
+        return self,other_node
 
 def exp(node):
     return Node(np.exp(node.val),parents=[(node,np.exp(node.val))])
