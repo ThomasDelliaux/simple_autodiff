@@ -10,7 +10,7 @@ import torch
 import numpy as np
 
 if __name__=="__main__":
-    print("Compute the grad of cos(a)²+ln(1+exp(b)) in (4,3)\n")
+    print("Compute the grad of 3a**3-b**2 in (4,3)\n")
     a=4.0
     b=3.0
     #With my autodiff
