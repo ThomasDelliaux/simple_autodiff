@@ -2,7 +2,7 @@
 """
 Created on Fri Nov 11 17:14:00 2022
 
-@author: thoma
+@author: Thomas
 """
 
 import Node as nd
